@@ -1,0 +1,61 @@
+=== AWS 部署完成 ===
+部署时间: 2025-12-14 21:58
+
+✅ 基础设施信息
+- EC2 IP: 54.89.123.129
+- EC2 实例 ID: i-0ae890e8a43915644
+- RDS Endpoint: hands-on-training-db.crjsnxsa4ld1.us-east-1.rds.amazonaws.com
+- 区域: us-east-1
+- Key Pair: us-east-1
+- Key File: ~/ec2world/us-east-1.pem
+
+✅ 数据库信息
+- DB Name: hands_on_training
+- DB User: postgres
+- DB Password: 7KYy1ihPlWQX8l4Rp1OxNQ==
+- PostgreSQL Version: 16.11
+
+✅ 访问地址
+- 前端: http://54.89.123.129
+- API: http://54.89.123.129/api
+- 健康检查: http://54.89.123.129/health
+
+✅ 管理员账号
+- 用户名: admin
+- 密码: admin123
+
+✅ 服务状态
+- 后端: PM2 管理，自动重启
+- 前端: Nginx 静态文件服务
+- 数据库: RDS PostgreSQL
+
+✅ SSH 连接
+ssh -i ~/ec2world/us-east-1.pem ec2-user@54.89.123.129
+
+✅ 常用命令
+# 查看后端日志
+pm2 logs hands-on-backend
+
+# 重启后端
+pm2 restart hands-on-backend
+
+# 查看 Nginx 日志
+sudo tail -f /var/log/nginx/access.log
+sudo tail -f /var/log/nginx/error.log
+
+# 重启 Nginx
+sudo systemctl reload nginx
+
+✅ 更新应用
+# 上传新代码
+scp -i ~/ec2world/us-east-1.pem -r backend frontend ec2-user@54.89.123.129:/tmp/
+
+# SSH 登录并更新
+ssh -i ~/ec2world/us-east-1.pem ec2-user@54.89.123.129
+cd /opt/hands-on-training
+sudo mv /tmp/backend /tmp/frontend .
+cd backend && npm install && pm2 restart hands-on-backend
+cd ../frontend && npm install && npm run build && sudo systemctl reload nginx
+
+✅ 清理资源
+aws cloudformation delete-stack --stack-name hands-on-training --region us-east-1
