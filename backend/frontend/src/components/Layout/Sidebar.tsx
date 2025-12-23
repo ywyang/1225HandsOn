@@ -16,7 +16,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     { path: '/admin/dashboard', label: 'Dashboard', icon: '📊', description: 'Overview & Analytics' },
     { path: '/admin/exercises', label: 'Exercise Management', icon: '📝', description: 'Create & Manage' },
     { path: '/admin/statistics', label: 'Statistics', icon: '📈', description: 'Detailed Reports' },
-    { path: '/admin/rankings', label: 'Rankings', icon: '🏆', description: 'Student Leaderboard' },
+    // { path: '/admin/rankings', label: 'Rankings', icon: '🏆', description: 'Student Leaderboard' },
     { path: '/admin/sql-query', label: 'SQL Query', icon: '🗄️', description: 'Database Console' },
   ];
 

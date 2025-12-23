@@ -119,7 +119,6 @@ def test_exercise1_submission() -> Optional[str]:
     
     submission_data = {
         'studentName': TEST_STUDENT['name'],
-        'accessKey': TEST_STUDENT['access_key'],
         'ec2InstanceInfo': TEST_EC2_INFO
     }
     
@@ -148,7 +147,6 @@ def test_exercise1_submission_with_avatar() -> Optional[str]:
     
     submission_data = {
         'studentName': TEST_STUDENT['name'],
-        'accessKey': TEST_STUDENT['access_key'],
         'ec2InstanceInfo': TEST_EC2_INFO,
         'avatarBase64': f'data:image/png;base64,{test_avatar_base64}'
     }
@@ -253,7 +251,6 @@ def test_file_upload_submission() -> Optional[str]:
     # 准备表单数据
     data = {
         'studentName': TEST_STUDENT['name'],
-        'accessKey': TEST_STUDENT['access_key'],
         'ec2InstanceInfo[operatingSystem]': TEST_EC2_INFO['operatingSystem'],
         'ec2InstanceInfo[amiId]': TEST_EC2_INFO['amiId'],
         'ec2InstanceInfo[internalIpAddress]': TEST_EC2_INFO['internalIpAddress'],

@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.js';
 import exerciseRoutes from './routes/exercises.js';
 import submissionRoutes from './routes/submissions.js';
 import statisticsRoutes from './routes/statistics.js';
+import sqlRoutes from './routes/sql.js';
 
 // Load environment variables
 dotenv.config();
@@ -40,6 +41,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/exercises', exerciseRoutes);
 app.use('/api/submissions', submissionRoutes);
 app.use('/api/statistics', statisticsRoutes);
+app.use('/api/sql', sqlRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

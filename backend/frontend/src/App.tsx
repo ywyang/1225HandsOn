@@ -35,9 +35,13 @@ function App() {
               <Route path="/admin/login" element={<AdminLoginPage />} />
               <Route path="/student/login" element={<StudentLoginPage />} />
               
+              {/* Public Student Routes - No login required */}
+              <Route path="/student" element={<ExerciseListPage />} />
+              <Route path="/student/exercises" element={<ExerciseListPage />} />
+              <Route path="/student/exercises/:id" element={<ExerciseDetailPage />} />
+              
               {/* Legacy redirects */}
               <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
-              <Route path="/student" element={<Navigate to="/student/login" replace />} />
               
               {/* Protected Admin Routes */}
               <Route 
@@ -81,28 +85,12 @@ function App() {
                 } 
               />
               
-              {/* Protected Student Routes */}
+              {/* Protected Student Routes - Keep for authenticated features */}
               <Route 
                 path="/student/dashboard" 
                 element={
                   <ProtectedRoute requiredRole="student">
                     <StudentDashboard />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/student/exercises" 
-                element={
-                  <ProtectedRoute requiredRole="student">
-                    <ExerciseListPage />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/student/exercises/:id" 
-                element={
-                  <ProtectedRoute requiredRole="student">
-                    <ExerciseDetailPage />
                   </ProtectedRoute>
                 } 
               />

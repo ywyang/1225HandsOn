@@ -185,7 +185,6 @@ async function submitExercise(ec2Info, avatar = null) {
   try {
     const submissionData = {
       studentName: STUDENT_NAME,
-      accessKey: ACCESS_KEY,
       ec2InstanceInfo: ec2Info
     };
     

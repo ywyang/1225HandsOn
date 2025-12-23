@@ -102,7 +102,6 @@ async function testExercise1Submission() {
   
   const submissionData = {
     studentName: TEST_STUDENT.name,
-    accessKey: TEST_STUDENT.accessKey,
     ec2InstanceInfo: TEST_EC2_INFO
   };
   
@@ -129,7 +128,6 @@ async function testExercise1SubmissionWithAvatar() {
   
   const submissionData = {
     studentName: TEST_STUDENT.name,
-    accessKey: TEST_STUDENT.accessKey,
     ec2InstanceInfo: TEST_EC2_INFO,
     avatarBase64: `data:image/png;base64,${testAvatarBase64}`
   };

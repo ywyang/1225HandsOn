@@ -67,7 +67,7 @@ export function Header({
                 >
                   <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
                     <span className="text-sm font-medium">
-                      {state.user.name.charAt(0).toUpperCase()}
+                      {state.user?.name?.charAt(0).toUpperCase() || 'U'}
                     </span>
                   </div>
                   <div className="hidden sm:block text-left">

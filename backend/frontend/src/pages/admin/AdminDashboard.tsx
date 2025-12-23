@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '../../components/Layout/Layout';
 import { Card } from '../../components/UI/Card';
@@ -57,12 +57,14 @@ export function AdminDashboard() {
   );
 
   // Real-time rankings data
+  const fetchRankings = useCallback(() => statisticsAPI.getRankings(), []);
+  
   const {
     data: rankingsData,
     lastUpdated: rankingsLastUpdated
   } = useRealTimeData(
     'admin-rankings',
-    () => statisticsAPI.getRankings(),
+    fetchRankings,
     {
       enabled: state.realTimeEnabled,
       interval: 30000, // Update every 30 seconds

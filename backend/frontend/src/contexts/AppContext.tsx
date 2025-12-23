@@ -12,6 +12,7 @@ export interface Exercise {
   isPublished: boolean;
   createdAt: string;
   updatedAt: string;
+  apiInfo?: string;
 }
 
 // Types for submissions

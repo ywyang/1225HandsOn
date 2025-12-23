@@ -18,6 +18,7 @@ interface ExerciseFormData {
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   maxScore: number;
   isPublished?: boolean;
+  apiInfo?: string;
 }
 
 export function ExerciseManagement() {
@@ -146,6 +147,7 @@ export function ExerciseManagement() {
       requirements: exercise.requirements,
       difficulty: exercise.difficulty,
       maxScore: exercise.maxScore,
+      apiInfo: exercise.apiInfo || '',
     });
     setShowCreateForm(true);
   };
@@ -165,12 +167,10 @@ export function ExerciseManagement() {
   };
 
   const handlePublishToggle = async (exercise: Exercise) => {
-    const optimisticExercise = { ...exercise, isPublished: !exercise.isPublished };
-    
     try {
-      await updateExerciseOptimistically(optimisticExercise);
-      dispatch({ type: 'UPDATE_EXERCISE', payload: optimisticExercise });
-      showSuccess('Success', `Exercise ${optimisticExercise.isPublished ? 'published' : 'unpublished'} successfully`);
+      const updatedExercise = await updateExerciseOptimistically(exercise);
+      dispatch({ type: 'UPDATE_EXERCISE', payload: updatedExercise });
+      showSuccess('Success', `Exercise ${updatedExercise.isPublished ? 'published' : 'unpublished'} successfully`);
     } catch (error) {
       showError('Update Error', `Failed to update exercise status: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
@@ -183,6 +183,7 @@ export function ExerciseManagement() {
       requirements: '',
       difficulty: 'beginner',
       maxScore: 100,
+      apiInfo: '',
     });
     setFormErrors({});
     setEditingExercise(null);
@@ -305,6 +306,23 @@ export function ExerciseManagement() {
                 {formErrors.requirements && (
                   <p className="text-red-500 text-sm mt-1">{formErrors.requirements}</p>
                 )}
+              </div>
+
+              <div>
+                <label htmlFor="apiInfo" className="block text-sm font-medium text-gray-700 mb-1">
+                  API Submission Information (Optional)
+                </label>
+                <textarea
+                  id="apiInfo"
+                  value={formData.apiInfo || ''}
+                  onChange={(e) => setFormData({ ...formData, apiInfo: e.target.value })}
+                  rows={6}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
+                  placeholder="Enter API information in HTML format (optional)"
+                />
+                <p className="text-gray-500 text-xs mt-1">
+                  Supports HTML. Leave empty to hide API information section.
+                </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

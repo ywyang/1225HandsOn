@@ -76,7 +76,6 @@ const studentRegistrationSchema = Joi.object({
 
 const submissionSchema = Joi.object({
   studentName: Joi.string().required().min(1).max(100),
-  accessKey: Joi.string().required().min(1).max(50),
   ec2InstanceInfo: Joi.object({
     operatingSystem: Joi.string().required(),
     amiId: Joi.string().required(),
@@ -88,7 +87,6 @@ const submissionSchema = Joi.object({
 
 const submissionWithAvatarSchema = Joi.object({
   studentName: Joi.string().required().min(1).max(100),
-  accessKey: Joi.string().required().min(1).max(50),
   ec2InstanceInfo: Joi.object({
     operatingSystem: Joi.string().required(),
     amiId: Joi.string().required(),
@@ -312,20 +310,26 @@ app.post('/api/submissions/exercise1', upload.single('avatar'), async (req, res)
       });
     }
 
-    const { studentName, accessKey, ec2InstanceInfo } = value;
+    const { studentName, ec2InstanceInfo } = value;
 
-    // Verify student exists and access key is valid
-    const studentQuery = 'SELECT * FROM students WHERE LOWER(name) = LOWER($1) AND access_key = $2';
-    const studentRows = await executeQuery(studentQuery, [studentName, accessKey]);
+    // Find or create student by name
+    let student;
+    const studentQuery = 'SELECT * FROM students WHERE LOWER(name) = LOWER($1)';
+    const studentRows = await executeQuery(studentQuery, [studentName]);
     
     if (studentRows.length === 0) {
-      return res.status(401).json({
-        error: 'Authentication failed',
-        message: 'Invalid student name or access key'
-      });
+      // Create new student if not exists
+      const accessKey = generateAccessKey();
+      const insertQuery = `
+        INSERT INTO students (name, access_key)
+        VALUES ($1, $2)
+        RETURNING id, name, access_key, registered_at
+      `;
+      const newStudentRows = await executeQuery(insertQuery, [studentName, accessKey]);
+      student = newStudentRows[0];
+    } else {
+      student = studentRows[0];
     }
-
-    const student = studentRows[0];
 
     // Get or create exercise 1
     let exerciseId;
@@ -376,15 +380,15 @@ app.post('/api/submissions/exercise1', upload.single('avatar'), async (req, res)
       score = 40; // Lower score for incomplete data and no avatar
     }
 
-    // Create submission record
+    // Create submission record with current timestamp
     const submissionQuery = `
       INSERT INTO submissions (
         student_id, exercise_id, client_ip_address, 
         operating_system, ami_id, internal_ip_address, elastic_ip_address, instance_type,
         screenshot_data, screenshot_filename, screenshot_mimetype, screenshot_size,
-        score, processing_status
+        score, processing_status, submitted_at
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, CURRENT_TIMESTAMP)
       RETURNING id, submitted_at
     `;
     
@@ -419,8 +423,7 @@ app.post('/api/submissions/exercise1', upload.single('avatar'), async (req, res)
       score: score,
       timestamp: submission.submitted_at,
       studentInfo: {
-        name: student.name,
-        accessKey: student.access_key
+        name: student.name
       },
       ec2Info: ec2InstanceInfo,
       avatarInfo: avatarData ? {

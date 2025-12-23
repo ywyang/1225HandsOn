@@ -1,0 +1,93 @@
+<h4 class="font-medium text-gray-900 mb-3">📡 提交端点</h4>
+<code class="block bg-gray-800 text-green-400 p-3 rounded text-sm mb-4 overflow-x-auto">
+POST http://100.49.176.211:3001/api/submissions/exercise1
+</code>
+
+<h4 class="font-medium text-gray-900 mb-2">📋 必填字段</h4>
+<div class="text-sm text-gray-700 space-y-2 mb-4">
+  <div class="flex items-start">
+    <span class="text-blue-600 mr-2">•</span>
+    <div>
+      <strong>studentName</strong> (string) - 学生姓名
+    </div>
+  </div>
+  <div class="flex items-start">
+    <span class="text-blue-600 mr-2">•</span>
+    <div>
+      <strong>ec2InstanceInfo</strong> (object) - EC2 实例信息
+      <div class="ml-4 mt-1 space-y-1 text-gray-600">
+        <div>- operatingSystem: 操作系统</div>
+        <div>- amiId: AMI ID</div>
+        <div>- internalIpAddress: 内网IP地址</div>
+        <div>- instanceType: 实例类型</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h4 class="font-medium text-gray-900 mb-2">✨ 可选字段（加分项）</h4>
+<div class="text-sm text-gray-700 space-y-2 mb-4">
+  <div class="flex items-start">
+    <span class="text-green-600 mr-2">•</span>
+    <div>
+      <strong>elasticIpAddress</strong> (string) - 弹性IP地址 <span class="text-green-600 font-medium">+10分</span>
+    </div>
+  </div>
+  <div class="flex items-start">
+    <span class="text-green-600 mr-2">•</span>
+    <div>
+      <strong>avatarBase64</strong> (string) - 头像图片的Base64编码 <span class="text-green-600 font-medium">+15分</span>
+    </div>
+  </div>
+  <div class="flex items-start">
+    <span class="text-green-600 mr-2">•</span>
+    <div>
+      <strong>industryCategory</strong> (string, 最长255字符) - 行业分类
+    </div>
+  </div>
+  <div class="flex items-start">
+    <span class="text-green-600 mr-2">•</span>
+    <div>
+      <strong>industryResearch</strong> (string, 最长1024字符) - 行业研究内容
+    </div>
+  </div>
+</div>
+
+<h4 class="font-medium text-gray-900 mb-2">🎯 评分规则</h4>
+<div class="text-sm bg-blue-50 border-l-4 border-blue-400 p-3 rounded mb-4">
+  <div class="space-y-1">
+    <div>✅ 完整EC2信息 + 弹性IP + 头像 = <strong class="text-blue-700">100分</strong></div>
+    <div>✅ 完整EC2信息 + 弹性IP = <strong class="text-blue-700">90分</strong></div>
+    <div>✅ 完整EC2信息 + 头像 = <strong class="text-blue-700">85分</strong></div>
+    <div>✅ 完整EC2信息 = <strong class="text-blue-700">80分</strong></div>
+  </div>
+</div>
+
+<h4 class="font-medium text-gray-900 mb-2">💡 快速开始</h4>
+<div class="text-sm bg-green-50 border-l-4 border-green-400 p-3 rounded mb-4">
+  <ol class="list-decimal ml-4 space-y-1">
+    <li>开发本地程序调用此API端点</li>
+    <li>系统会自动收集客户端IP地址</li>
+    <li>无需提前注册，提交时自动创建学生记录</li>
+    <li>支持重复提交，取最高分</li>
+  </ol>
+</div>
+
+<h4 class="font-medium text-gray-900 mb-2">📝 请求示例</h4>
+<pre class="bg-gray-800 text-white p-3 rounded text-xs overflow-x-auto"><code>{
+  "studentName": "张三",
+  "ec2InstanceInfo": {
+    "operatingSystem": "Amazon Linux 2023",
+    "amiId": "ami-0c55b159cbfafe1f0",
+    "internalIpAddress": "172.31.10.20",
+    "elasticIpAddress": "100.49.176.211",
+    "instanceType": "t2.micro"
+  },
+  "industryCategory": "云计算",
+  "industryResearch": "云计算技术研究...",
+  "avatarBase64": "iVBORw0KGgo..."
+}</code></pre>
+
+<div class="mt-4 text-sm text-gray-600">
+  <strong>提示：</strong>查看完整API文档和测试脚本，请访问项目仓库或联系讲师获取。
+</div>

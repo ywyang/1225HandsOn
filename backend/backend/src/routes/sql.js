@@ -1,22 +1,7 @@
 import express from 'express';
-import { Pool } from 'pg';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { getClient } from '../config/database.js';
 
 const router = express.Router();
-
-// Database connection
-const pool = new Pool({
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT || '5432'),
-  database: process.env.DB_NAME || 'hands_on_training',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'postgres',
-  max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
-});
 
 // Middleware to check admin authentication
 const requireAdmin = (req, res, next) => {
@@ -70,7 +55,7 @@ router.post('/execute', requireAdmin, async (req, res) => {
 
     // Execute the query with timeout
     const startTime = Date.now();
-    const client = await pool.connect();
+    const client = await getClient();
     
     try {
       // Set query timeout to 30 seconds
@@ -143,7 +128,7 @@ router.post('/execute', requireAdmin, async (req, res) => {
 // Get database schema information
 router.get('/schema', requireAdmin, async (req, res) => {
   try {
-    const client = await pool.connect();
+    const client = await getClient();
     
     try {
       // Get all tables and their columns

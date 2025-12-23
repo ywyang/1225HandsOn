@@ -5,12 +5,20 @@ import { Card } from '../../components/UI/Card';
 import { Button } from '../../components/UI/Button';
 import { LoadingSpinner } from '../../components/UI/LoadingSpinner';
 import { ErrorMessage } from '../../components/UI/ErrorMessage';
-import { useApp } from '../../contexts/AppContext';
 import { exerciseAPI } from '../../services/api';
-import { Exercise } from '../../contexts/AppContext';
+
+interface Exercise {
+  id: string;
+  title: string;
+  description: string;
+  difficulty: string;
+  maxScore: number;
+  isPublished: boolean;
+  apiInfo?: string;
+}
 
 export function ExerciseListPage() {
-  const { state, dispatch } = useApp();
+  const [exercises, setExercises] = useState<Exercise[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState<string>('all');
   const [loading, setLoading] = useState(true);
@@ -24,8 +32,8 @@ export function ExerciseListPage() {
     try {
       setLoading(true);
       setError(null);
-      const exercises = await exerciseAPI.getExercises();
-      dispatch({ type: 'SET_EXERCISES', payload: exercises });
+      const exerciseData = await exerciseAPI.getExercises();
+      setExercises(exerciseData);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load exercises');
     } finally {
@@ -33,7 +41,7 @@ export function ExerciseListPage() {
     }
   };
 
-  const filteredExercises = state.exercises.filter((exercise: Exercise) => {
+  const filteredExercises = exercises.filter((exercise: Exercise) => {
     const matchesSearch = exercise.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          exercise.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesDifficulty = difficultyFilter === 'all' || exercise.difficulty === difficultyFilter;
@@ -180,7 +188,7 @@ export function ExerciseListPage() {
         {filteredExercises.length > 0 && (
           <Card>
             <div className="text-center text-sm text-gray-600">
-              Showing {filteredExercises.length} of {state.exercises.filter(e => e.isPublished).length} available exercises
+              Showing {filteredExercises.length} of {exercises.filter(e => e.isPublished).length} available exercises
             </div>
           </Card>
         )}

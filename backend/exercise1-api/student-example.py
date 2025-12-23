@@ -166,7 +166,6 @@ class Exercise1Client:
         try:
             submission_data = {
                 'studentName': self.student_name,
-                'accessKey': self.access_key,
                 'ec2InstanceInfo': ec2_info
             }
             

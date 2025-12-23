@@ -183,17 +183,26 @@ export function useRealTimeData<T>(
 
   const [data, setData] = useState<T | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  
+  // Use refs to avoid recreating updateData on every render
+  const onUpdateRef = useRef(onUpdate);
+  const onErrorRef = useRef(onError);
+  
+  useEffect(() => {
+    onUpdateRef.current = onUpdate;
+    onErrorRef.current = onError;
+  }, [onUpdate, onError]);
 
   const updateData = useCallback(async () => {
     try {
       const result = await fetchFunction();
       setData(result);
       setLastUpdated(new Date());
-      onUpdate?.(result);
+      onUpdateRef.current?.(result);
     } catch (error) {
-      onError?.(error as ApiError);
+      onErrorRef.current?.(error as ApiError);
     }
-  }, [fetchFunction, onUpdate, onError]);
+  }, [fetchFunction]);
 
   useEffect(() => {
     if (!enabled) return;
@@ -244,10 +253,12 @@ export function useOptimisticUpdate<T>(
       // Perform actual update
       const result = await updateFunction(optimisticData);
       setData(result);
+      return result;
     } catch (err) {
       // Revert on error
       setData(previousData);
       setError(err as ApiError);
+      throw err;
     } finally {
       setIsUpdating(false);
     }

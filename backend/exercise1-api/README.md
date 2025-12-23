@@ -119,7 +119,6 @@ Content-Type: application/json
 
 {
   "studentName": "学员姓名",
-  "accessKey": "访问密钥",
   "ec2InstanceInfo": {
     "operatingSystem": "Amazon Linux 2",
     "amiId": "ami-0abc123",
@@ -137,7 +136,6 @@ POST /api/submissions/exercise1
 Content-Type: multipart/form-data
 
 studentName: 学员姓名
-accessKey: 访问密钥
 ec2InstanceInfo[operatingSystem]: Amazon Linux 2
 ec2InstanceInfo[amiId]: ami-0abc123
 ec2InstanceInfo[internalIpAddress]: 10.0.1.100
