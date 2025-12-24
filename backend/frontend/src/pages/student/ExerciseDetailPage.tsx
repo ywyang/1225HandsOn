@@ -19,6 +19,7 @@ interface Exercise {
   maxScore: number;
   isPublished: boolean;
   apiInfo?: string;
+  implementationReference?: string;
 }
 
 export function ExerciseDetailPage() {
@@ -242,6 +243,18 @@ export function ExerciseDetailPage() {
               <div 
                 className="prose prose-sm max-w-none"
                 dangerouslySetInnerHTML={{ __html: exercise.apiInfo }}
+              />
+            </div>
+          </Card>
+        )}
+
+        {/* Implementation Reference */}
+        {exercise.implementationReference && (
+          <Card title="Implementation Reference">
+            <div className="bg-gray-50 rounded-lg p-4">
+              <div 
+                className="prose prose-sm max-w-none"
+                dangerouslySetInnerHTML={{ __html: exercise.implementationReference }}
               />
             </div>
           </Card>

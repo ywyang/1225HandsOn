@@ -19,6 +19,7 @@ interface ExerciseFormData {
   maxScore: number;
   isPublished?: boolean;
   apiInfo?: string;
+  implementationReference?: string;
 }
 
 export function ExerciseManagement() {
@@ -148,6 +149,7 @@ export function ExerciseManagement() {
       difficulty: exercise.difficulty,
       maxScore: exercise.maxScore,
       apiInfo: exercise.apiInfo || '',
+      implementationReference: exercise.implementationReference || '',
     });
     setShowCreateForm(true);
   };
@@ -184,6 +186,7 @@ export function ExerciseManagement() {
       difficulty: 'beginner',
       maxScore: 100,
       apiInfo: '',
+      implementationReference: '',
     });
     setFormErrors({});
     setEditingExercise(null);
@@ -322,6 +325,23 @@ export function ExerciseManagement() {
                 />
                 <p className="text-gray-500 text-xs mt-1">
                   Supports HTML. Leave empty to hide API information section.
+                </p>
+              </div>
+
+              <div>
+                <label htmlFor="implementationReference" className="block text-sm font-medium text-gray-700 mb-1">
+                  Implementation Reference (Optional)
+                </label>
+                <textarea
+                  id="implementationReference"
+                  value={formData.implementationReference || ''}
+                  onChange={(e) => setFormData({ ...formData, implementationReference: e.target.value })}
+                  rows={6}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
+                  placeholder="Enter implementation reference in HTML format (optional)"
+                />
+                <p className="text-gray-500 text-xs mt-1">
+                  Supports HTML. Leave empty to hide implementation reference section.
                 </p>
               </div>
 

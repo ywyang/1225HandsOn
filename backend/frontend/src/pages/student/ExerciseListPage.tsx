@@ -15,6 +15,7 @@ interface Exercise {
   maxScore: number;
   isPublished: boolean;
   apiInfo?: string;
+  implementationReference?: string;
 }
 
 export function ExerciseListPage() {

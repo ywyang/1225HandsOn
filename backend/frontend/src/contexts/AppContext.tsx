@@ -13,6 +13,7 @@ export interface Exercise {
   createdAt: string;
   updatedAt: string;
   apiInfo?: string;
+  implementationReference?: string;
 }
 
 // Types for submissions
