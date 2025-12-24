@@ -14,6 +14,7 @@ import { ExerciseManagement } from './pages/admin/ExerciseManagement';
 import { Statistics } from './pages/admin/Statistics';
 import { Rankings } from './pages/admin/Rankings';
 import { SqlQuery } from './pages/admin/SqlQuery';
+import { Exercise1Stats } from './pages/admin/Exercise1Stats';
 import { StudentLoginPage } from './pages/student/StudentLoginPage';
 import { StudentDashboard } from './pages/student/StudentDashboard';
 import { ExerciseListPage } from './pages/student/ExerciseListPage';
@@ -57,6 +58,14 @@ function App() {
                 element={
                   <ProtectedRoute requiredRole="admin">
                     <ExerciseManagement />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/exercise1-stats" 
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <Exercise1Stats />
                   </ProtectedRoute>
                 } 
               />
