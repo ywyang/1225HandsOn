@@ -20,6 +20,7 @@ interface ExerciseFormData {
   isPublished?: boolean;
   apiInfo?: string;
   implementationReference?: string;
+  embeddedUrl?: string;
 }
 
 export function ExerciseManagement() {
@@ -150,6 +151,7 @@ export function ExerciseManagement() {
       maxScore: exercise.maxScore,
       apiInfo: exercise.apiInfo || '',
       implementationReference: exercise.implementationReference || '',
+      embeddedUrl: exercise.embeddedUrl || '',
     });
     setShowCreateForm(true);
   };
@@ -187,6 +189,7 @@ export function ExerciseManagement() {
       maxScore: 100,
       apiInfo: '',
       implementationReference: '',
+      embeddedUrl: '',
     });
     setFormErrors({});
     setEditingExercise(null);
@@ -342,6 +345,23 @@ export function ExerciseManagement() {
                 />
                 <p className="text-gray-500 text-xs mt-1">
                   Supports HTML. Leave empty to hide implementation reference section.
+                </p>
+              </div>
+
+              <div>
+                <label htmlFor="embeddedUrl" className="block text-sm font-medium text-gray-700 mb-1">
+                  Embedded URL (Optional)
+                </label>
+                <input
+                  type="url"
+                  id="embeddedUrl"
+                  value={formData.embeddedUrl || ''}
+                  onChange={(e) => setFormData({ ...formData, embeddedUrl: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="https://example.com"
+                />
+                <p className="text-gray-500 text-xs mt-1">
+                  Enter a URL to embed external content in the exercise page.
                 </p>
               </div>
 

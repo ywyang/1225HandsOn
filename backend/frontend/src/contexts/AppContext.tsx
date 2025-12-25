@@ -14,6 +14,7 @@ export interface Exercise {
   updatedAt: string;
   apiInfo?: string;
   implementationReference?: string;
+  embeddedUrl?: string;
 }
 
 // Types for submissions

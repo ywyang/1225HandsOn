@@ -15,7 +15,9 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
   const adminNavItems = [
     { path: '/admin/dashboard', label: 'Dashboard', icon: '📊', description: 'Overview & Analytics' },
     { path: '/admin/exercises', label: 'Exercise Management', icon: '📝', description: 'Create & Manage' },
-    { path: '/admin/exercise1-stats', label: 'Exercise 1 Stats', icon: '📋', description: 'Exercise 1 Analysis' },
+    { path: '/admin/exercise1-stats', label: 'Exercise KIRO Stats', icon: '📋', description: 'Exercise KIRO Analysis' },
+    { path: '/admin/exercise1-stats-enhanced', label: 'Exercise KIRO Stats Pro', icon: '✨', description: 'Enhanced Dashboard' },
+    { path: '/admin/quicksuite-stats', label: 'Quick Suite Stats', icon: '🚀', description: 'Company Reports' },
     { path: '/admin/statistics', label: 'Statistics', icon: '📈', description: 'Detailed Reports' },
     // { path: '/admin/rankings', label: 'Rankings', icon: '🏆', description: 'Student Leaderboard' },
     { path: '/admin/sql-query', label: 'SQL Query', icon: '🗄️', description: 'Database Console' },

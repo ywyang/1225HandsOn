@@ -15,7 +15,8 @@ const toCamelCase = (row) => ({
   createdAt: row.created_at,
   updatedAt: row.updated_at,
   apiInfo: row.api_info,
-  implementationReference: row.implementation_reference
+  implementationReference: row.implementation_reference,
+  embeddedUrl: row.embedded_url
 });
 
 router.get('/', async (req, res) => {
@@ -30,10 +31,10 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { title, description, requirements, difficulty, maxScore, isPublished, apiInfo, implementationReference } = req.body;
+    const { title, description, requirements, difficulty, maxScore, isPublished, apiInfo, implementationReference, embeddedUrl } = req.body;
     const result = await query(
-      'INSERT INTO exercises (title, description, requirements, difficulty, max_score, is_published, api_info, implementation_reference) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-      [title, description, requirements, difficulty || 'beginner', maxScore || 100, isPublished || false, apiInfo || null, implementationReference || null]
+      'INSERT INTO exercises (title, description, requirements, difficulty, max_score, is_published, api_info, implementation_reference, embedded_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
+      [title, description, requirements, difficulty || 'beginner', maxScore || 100, isPublished || false, apiInfo || null, implementationReference || null, embeddedUrl || null]
     );
     res.json({ data: toCamelCase(result.rows[0]) });
   } catch (error) {
@@ -45,10 +46,10 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, requirements, difficulty, maxScore, isPublished, apiInfo, implementationReference } = req.body;
+    const { title, description, requirements, difficulty, maxScore, isPublished, apiInfo, implementationReference, embeddedUrl } = req.body;
     const result = await query(
-      'UPDATE exercises SET title = $1, description = $2, requirements = $3, difficulty = $4, max_score = $5, is_published = $6, api_info = $7, implementation_reference = $8 WHERE id = $9 RETURNING *',
-      [title, description, requirements, difficulty, maxScore, isPublished, apiInfo || null, implementationReference || null, id]
+      'UPDATE exercises SET title = $1, description = $2, requirements = $3, difficulty = $4, max_score = $5, is_published = $6, api_info = $7, implementation_reference = $8, embedded_url = $9 WHERE id = $10 RETURNING *',
+      [title, description, requirements, difficulty, maxScore, isPublished, apiInfo || null, implementationReference || null, embeddedUrl || null, id]
     );
     res.json({ data: toCamelCase(result.rows[0]) });
   } catch (error) {

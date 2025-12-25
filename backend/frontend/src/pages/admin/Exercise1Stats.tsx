@@ -82,7 +82,7 @@ export function Exercise1Stats() {
   }
 
   return (
-    <Layout title="Exercise 1 Statistics">
+    <Layout title="Exercise KIRO Statistics">
       <div className="space-y-6">
         {/* Earliest Completion */}
         <Card>

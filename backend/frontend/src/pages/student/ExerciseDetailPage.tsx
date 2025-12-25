@@ -20,6 +20,7 @@ interface Exercise {
   isPublished: boolean;
   apiInfo?: string;
   implementationReference?: string;
+  embeddedUrl?: string;
 }
 
 export function ExerciseDetailPage() {
@@ -255,6 +256,20 @@ export function ExerciseDetailPage() {
               <div 
                 className="prose prose-sm max-w-none"
                 dangerouslySetInnerHTML={{ __html: exercise.implementationReference }}
+              />
+            </div>
+          </Card>
+        )}
+
+        {/* Embedded URL */}
+        {exercise.embeddedUrl && (
+          <Card title="External Resource">
+            <div className="bg-gray-50 rounded-lg p-4">
+              <iframe 
+                src={exercise.embeddedUrl} 
+                className="w-full h-[600px] border-0 rounded-lg"
+                title="External Resource"
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
               />
             </div>
           </Card>
