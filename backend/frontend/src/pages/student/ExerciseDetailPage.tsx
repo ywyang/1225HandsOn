@@ -269,7 +269,8 @@ export function ExerciseDetailPage() {
                 src={exercise.embeddedUrl} 
                 className="w-full h-[600px] border-0 rounded-lg"
                 title="External Resource"
-                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation"
+                allow="fullscreen"
               />
             </div>
           </Card>

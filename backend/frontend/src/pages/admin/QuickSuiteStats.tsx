@@ -137,7 +137,7 @@ export function QuickSuiteStats() {
         </div>
 
         {/* Top Performers Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           {/* Earliest Submissions */}
           <div className="gradient-green rounded-2xl p-6 text-white shadow-2xl animate-slide-in" style={{animationDelay: '0.1s'}}>
             <div className="flex items-center mb-4">
@@ -163,42 +163,6 @@ export function QuickSuiteStats() {
                       <div className="text-right">
                         <div className="bg-white text-green-600 px-2 py-1 rounded-full font-bold text-xs">
                           {report.stock_code}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-center py-8 opacity-70">No reports yet</p>
-            )}
-          </div>
-
-          {/* Highest Revenue */}
-          <div className="gradient-gold rounded-2xl p-6 text-white shadow-2xl animate-slide-in" style={{animationDelay: '0.2s'}}>
-            <div className="flex items-center mb-4">
-              <span className="text-5xl mr-3">💰</span>
-              <div>
-                <h2 className="text-2xl font-bold">Top Revenue</h2>
-                <p className="text-sm opacity-90">Highest Performing Companies</p>
-              </div>
-            </div>
-            {stats?.highestRevenue && stats.highestRevenue.length > 0 ? (
-              <div className="space-y-3 max-h-96 overflow-y-auto">
-                {stats.highestRevenue.map((report, idx) => (
-                  <div key={idx} className="glass-effect rounded-xl p-4 hover:scale-105 transition-transform">
-                    <div className="flex items-center gap-3">
-                      <div className="rank-badge" style={{background: idx < 3 ? '#FFD700' : '#4A5568'}}>
-                        #{idx + 1}
-                      </div>
-                      <div className="flex-1">
-                        <p className="font-bold text-lg">{report.company_name}</p>
-                        <p className="text-sm opacity-90">{report.user_name}</p>
-                        <p className="text-xs opacity-80">{report.report_period}</p>
-                      </div>
-                      <div className="text-right">
-                        <div className="bg-white text-pink-600 px-2 py-1 rounded-full font-bold text-xs">
-                          {formatRevenue(report.revenue)}
                         </div>
                       </div>
                     </div>
@@ -253,51 +217,6 @@ export function QuickSuiteStats() {
           )}
         </div>
 
-        {/* User Groups */}
-        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden animate-slide-in" style={{animationDelay: '0.4s'}}>
-          <div className="gradient-orange p-6 text-white">
-            <h2 className="text-2xl font-bold flex items-center gap-2">
-              <span>👥</span>
-              Multiple Reports by User
-            </h2>
-          </div>
-          <div className="p-6">
-            {stats?.userGroups && stats.userGroups.length > 0 ? (
-              <div className="space-y-4">
-                {stats.userGroups.map((group, idx) => (
-                  <div key={idx} className="border-2 border-orange-200 rounded-xl p-5 bg-gradient-to-r from-orange-50 to-yellow-50 hover:shadow-lg transition-shadow">
-                    <div className="flex justify-between items-center mb-4">
-                      <p className="text-lg font-bold text-orange-900 flex items-center gap-2">
-                        <span>👤</span>
-                        {group.user_name}
-                      </p>
-                      <span className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md">
-                        {group.report_count} reports
-                      </span>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {group.reports.map((report, rIdx) => (
-                        <div key={rIdx} className="bg-white p-4 rounded-lg border border-orange-200 hover:border-orange-400 transition-colors">
-                          <p className="font-bold text-gray-900">{report.company_name}</p>
-                          <p className="text-sm text-gray-600 font-mono">{report.stock_code}</p>
-                          <p className="text-xs text-gray-500 mt-1">{report.report_period}</p>
-                          <div className="flex justify-between mt-2 text-xs">
-                            <span className="text-gray-500">{formatDate(report.created_at)}</span>
-                            <span className="font-bold text-green-600 bg-green-100 px-2 py-1 rounded">
-                              {formatRevenue(report.revenue)}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-center py-8 text-gray-500">No multiple reports found</p>
-            )}
-          </div>
-        </div>
       </div>
     </Layout>
   );
